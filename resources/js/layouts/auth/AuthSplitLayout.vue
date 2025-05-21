@@ -42,7 +42,7 @@
 
 <style>
     .bg-stiebi {
-        background-image: url('../../../images/bg.png');
+        background-image: url('/images/bg.png');
         background-size: cover;
         background-repeat: no-repeat;
         filter: brightness(50%);

@@ -7,7 +7,9 @@
     import { BookOpenIcon } from 'lucide-vue-next';
 
     // Pass { disableTransition: false } to enable transitions
-    const mode = useColorMode();
+    const mode = useColorMode({
+        disableTransition: false
+    });
     const page = usePage();
     const name = page.props.name;
 </script>
@@ -23,7 +25,7 @@
         <header
             class="not-has-[nav]:hidden mb-6 w-full max-w-[335px] text-sm lg:max-w-6xl flex items-center justify-between gap-10">
             <div class="flex flex-row items-center gap-2">
-                <img src="../../images/logo.png" alt="logo" class="h-10">
+                <img src="/images/logo.png" alt="logo" class="h-10">
                 <span class="font-bold dark:text-white">{{ name }}</span>
             </div>
             <nav class="flex items-center justify-end gap-4">
@@ -91,7 +93,7 @@
                         <BookOpenIcon class="h-4 inline" />
                         <p>Kelas Karyawan</p>
                     </div>
-                    <img src="../../images/mhs.png" alt="mahasiswa" class="relative max-w-3/4 mx-auto -mt-14 z-10">
+                    <img src="/images/mhs.png" alt="mahasiswa" class="relative max-w-3/4 mx-auto -mt-14 z-10">
                 </div>
             </main>
         </div>
