@@ -101,12 +101,13 @@
                             <span class="text-primary text-6xl">STIEBI Prana Putra</span> Solusinya!
                         </p>
                         <div>
-                            <Button as-child class="bg-primary">
+                            <Button as-child class="bg-primary dark:text-white">
                                 <a href="/register">
                                     Daftar Sekarang!
                                 </a>
                             </Button>
-                            <Button as-child variant="outline" class="ms-2 border-1 border-primary">
+                            <Button as-child variant="outline"
+                                class="ms-2 border-1 hover:border-primary dark:hover:border-primary dark:text-white">
                                 <a href="/login">
                                     Login
                                 </a>
