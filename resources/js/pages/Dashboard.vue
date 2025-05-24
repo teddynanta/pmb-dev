@@ -11,9 +11,9 @@
         },
     ];
 
-    // const page = usePage();
-    // const userCount = page.props.userCount as number;
-    // console.log(userCount);
+    const page = usePage();
+    const userCount = page.props.userCount as number;
+    console.log(userCount);
 
 </script>
 
@@ -26,8 +26,7 @@
             <div class="grid auto-rows-min gap-4 md:grid-cols-3">
                 <div
                     class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <!-- Total Users : {{ userCount }} -->
-                    <PlaceholderPattern />
+                    Total Users : {{ userCount }}
                 </div>
                 <div
                     class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">

@@ -30,12 +30,11 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $countUser = User::count();
         $request->authenticate();
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false))->with('userCount', $countUser);
+        return redirect()->intended(route('dashboard', absolute: false));
     }
 
     /**

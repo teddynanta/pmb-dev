@@ -1,19 +1,11 @@
 <script setup lang="ts">
     import AppLayout from '@/layouts/AppLayout.vue';
     import { type BreadcrumbItem } from '@/types';
-    import { Head, usePage } from '@inertiajs/vue3';
-    import { Button } from '@/components/ui/button'
-    import {
-        Table,
-        TableBody,
-        TableCaption,
-        TableCell,
-        TableHead,
-        TableHeader,
-        TableRow,
-    } from '@/components/ui/table'
-    import { formatReadableDateTime } from '@/lib/date';
-    import { Trash2, SquarePen } from "lucide-vue-next";
+    import { Head } from '@inertiajs/vue3';
+    import type { Payment } from '@/components/payments/column'
+    import { onMounted, ref } from 'vue'
+    import { columns } from '@/components/payments/column'
+    import DataTable from '@/components/payments/DataTable.vue'
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
@@ -21,14 +13,36 @@
             href: '/users',
         },
     ];
-    const page = usePage();
-    const users = page.props.users as Array<{
-        id: number;
-        name: string;
-        email: string;
-        email_verified_at: string | null;
-        role: string;
-    }>;
+    const data = ref<Payment[]>([])
+
+    async function getData(): Promise<Payment[]> {
+        // Fetch data from your API here.
+        return [
+            {
+                id: '728ed52f',
+                amount: 10000,
+                status: 'pending',
+                email: 'm@example.com',
+            },
+            {
+                id: '2934hd82',
+                amount: 350000,
+                status: 'success',
+                email: 'a@example.com',
+            },
+            {
+                id: '1023984jj',
+                amount: 90000,
+                status: 'pending',
+                email: 'b@example.com',
+            },
+            // ...
+        ]
+    }
+
+    onMounted(async () => {
+        data.value = await getData()
+    })
 </script>
 
 <template>
@@ -36,42 +50,8 @@
     <Head title="Users" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="mx-10 py-4">
-            <Table>
-                <TableCaption>List of Users</TableCaption>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead class="w-[100px]">Name</TableHead>
-                        <TableHead>Email</TableHead>
-                        <TableHead>Verified At</TableHead>
-                        <TableHead>Role</TableHead>
-                        <TableHead class="text-right">Action</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    <TableRow v-for="user in users" :key="user.id">
-                        <TableCell class="font-medium">{{ user.name }}</TableCell>
-                        <TableCell>{{ user.email }}</TableCell>
-                        <TableCell v-if="user.email_verified_at">{{ formatReadableDateTime(user.email_verified_at) }}
-                        </TableCell>
-                        <TableCell v-else>Not Verified Yet</TableCell>
-                        <TableCell>{{ user.role }}</TableCell>
-                        <TableCell class="text-right">
-                            <Button as-child variant="outline"
-                                class="ms-2 bg-yellow-500 hover:border-yellow-500 text-white">
-                                <a href="#">
-                                    <SquarePen class="h-4 w-4" />
-                                </a>
-                            </Button>
-                            <Button as-child variant="outline" class="ms-2 bg-red-500 hover:border-red-500 text-white">
-                                <a href="#">
-                                    <Trash2 class="h-4 w-4" />
-                                </a>
-                            </Button>
-                        </TableCell>
-                    </TableRow>
-                </TableBody>
-            </Table>
+        <div class="container py-10 mx-auto">
+            <DataTable :columns="columns" :data="data" />
         </div>
     </AppLayout>
 </template>
