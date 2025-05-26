@@ -2,11 +2,12 @@
     import { Button } from '@/components/ui/button'
     import type { ColumnDef, ColumnFiltersState, SortingState } from "@tanstack/vue-table";
     import { FlexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useVueTable } from '@tanstack/vue-table';
-    import { Table, TableBody, TableCell, TableHead, TableHeader } from "@/components/ui/table";
-    import TableRow from '../ui/table/TableRow.vue';
+    import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
     import { ref } from 'vue';
     import { valueUpdater } from '@/lib/utils';
     import { Input } from '@/components/ui/input'
+    import TablePagination from '@/components/ui/TablePagination.vue';
+    import { Plus } from "lucide-vue-next";
 
     const props = defineProps<{
         columns: ColumnDef<TData, TValue>[]
@@ -35,9 +36,17 @@
 <template>
     <div>
         <div class="flex items-center py-4">
-            <Input class="max-w-sm" placeholder="Filter emails..."
-                :model-value="table.getColumn('email')?.getFilterValue() as string"
-                @update:model-value=" table.getColumn('email')?.setFilterValue($event)" />
+            <Button as-child>
+                <a href="users/create">
+                    <Plus class="w-4 h-4 mr-2" /> Add User
+                </a>
+            </Button>
+        </div>
+        <div class="flex items-center justify-between py-4">
+            <Input class="max-w-sm" placeholder="Filter names..."
+                :model-value="table.getColumn('name')?.getFilterValue() as string"
+                @update:model-value=" table.getColumn('name')?.setFilterValue($event)" />
+            <TablePagination :table="table" />
         </div>
         <div class="border rounded-md">
             <Table>
@@ -68,14 +77,15 @@
                 </TableBody>
 
             </Table>
-            <div class="flex items-center justify-end py-4 space-x-2">
-                <Button variant="outline" size="sm" :disabled="!table.getCanPreviousPage()"
+            <div class="flex items-center justify-end py-4 px-2 space-x-2">
+                <!-- <Button variant="outline" size="sm" :disabled="!table.getCanPreviousPage()"
                     @click="table.previousPage()">
                     Previous
                 </Button>
                 <Button variant="outline" size="sm" :disabled="!table.getCanNextPage()" @click="table.nextPage()">
                     Next
-                </Button>
+                </Button> -->
+                <TablePagination :table="table" />
             </div>
         </div>
     </div>

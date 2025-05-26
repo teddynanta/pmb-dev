@@ -4,13 +4,13 @@
     import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 
     defineProps<{
-        payment: {
-            id: string
+        user: {
+            email: string
         }
     }>()
 
-    function copy(id: string) {
-        navigator.clipboard.writeText(id)
+    function copy(email: string) {
+        navigator.clipboard.writeText(email)
     }
 </script>
 
@@ -24,12 +24,11 @@
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem @click="copy(payment.id)">
-                Copy payment ID
+            <DropdownMenuItem @click="copy(user.email)">
+                Copy user email
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem>View user details</DropdownMenuItem>
         </DropdownMenuContent>
     </DropdownMenu>
 </template>
