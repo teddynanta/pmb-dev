@@ -1,9 +1,10 @@
 import type { ColumnDef } from "@tanstack/vue-table";
-import DropdownAction from "@/components/ui/user-data-table/DataTableDropdown.vue";
+// import DropdownAction from "@/components/ui/data-table/DataTableDropdown.vue";
 import { h } from "vue";
 import { ArrowUpDown } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import { formatReadableDateTime } from "@/lib/date";
+import DataTableActions from "@/components/ui/data-table/DataTableActions.vue";
 
 export interface User {
     id: number;
@@ -66,14 +67,27 @@ export const columns: ColumnDef<User>[] = [
     //         return h('div', { class: 'text-right font-medium' }, formatted);
     //     },
     // },
+    // {
+    //     id: 'actions',
+    //     enableHiding: false,
+    //     cell: ({ row }) => {
+    //         const user = row.original
+    //         return h('div', { class: 'relative' }, h(DropdownAction, {
+    //             user,
+    //         }))
+    //     },
+    // },
     {
         id: 'actions',
-        enableHiding: false,
+        header: () => h('div', 'Actions'),
         cell: ({ row }) => {
-            const user = row.original
-            return h('div', { class: 'relative' }, h(DropdownAction, {
-                user,
-            }))
+            const user = row.original as User
+            return h(DataTableActions, {
+                id: user.id,
+                email: user.email,
+                editUrl: `users/${user.id}/edit`,
+                deleteUrl: `users/${user.id}`,
+            })
         },
     },
 ]

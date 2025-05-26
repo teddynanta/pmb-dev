@@ -1,5 +1,4 @@
 <script setup lang="ts" generic="TData, TValue">
-    import { Button } from '@/components/ui/button'
     import type { ColumnDef, ColumnFiltersState, SortingState } from "@tanstack/vue-table";
     import { FlexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useVueTable } from '@tanstack/vue-table';
     import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -7,7 +6,10 @@
     import { valueUpdater } from '@/lib/utils';
     import { Input } from '@/components/ui/input'
     import TablePagination from '@/components/ui/TablePagination.vue';
-    import { Plus } from "lucide-vue-next";
+
+    const emit = defineEmits<{
+        (e: 'delete', id: string): void;
+    }>();
 
     const props = defineProps<{
         columns: ColumnDef<TData, TValue>[]
@@ -35,13 +37,6 @@
 
 <template>
     <div>
-        <div class="flex items-center py-4">
-            <Button as-child>
-                <a href="users/create">
-                    <Plus class="w-4 h-4 mr-2" /> Add User
-                </a>
-            </Button>
-        </div>
         <div class="flex items-center justify-between py-4">
             <Input class="max-w-sm" placeholder="Filter names..."
                 :model-value="table.getColumn('name')?.getFilterValue() as string"
