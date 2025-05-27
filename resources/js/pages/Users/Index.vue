@@ -17,7 +17,15 @@
     ];
 
     const props = defineProps<{ users: User[] }>();
-    const data = ref<User[]>(props.users);
+    const tableData = ref([...props.users]);
+    function handleRowDelete(id: number) {
+        console.log('Deleting user with ID:', id);
+
+        tableData.value = tableData.value.filter(user => user.id !== id);
+    }
+
+    const columnsData = columns(handleRowDelete);
+    // const data = ref<User[]>(props.users);
 
 
 </script>
@@ -35,7 +43,7 @@
                     </a>
                 </Button>
             </div>
-            <DataTable :columns="columns" :data="data" />
+            <DataTable :columns="columnsData" :data="tableData" :on-row-delete="handleRowDelete" />
         </div>
     </AppLayout>
 </template>

@@ -5,6 +5,7 @@
     import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
     import { MoreVertical, Pencil, Trash2, Copy } from 'lucide-vue-next'
     import { router } from '@inertiajs/vue3'
+    import { ref } from "vue";
 
     const props = defineProps<{
         id: number | string
@@ -29,17 +30,23 @@
         })
     }
 
+
     function handleEdit() {
         router.visit(props.editUrl)
     }
 
+    const emit = defineEmits(['deleted']);
+    const deleting = ref(false);
     function handleDelete() {
-        if (!confirm("Are you sure you want to delete this record?")) return
+        // if (!confirm("Are you sure you want to delete this record?")) return
+        if (!confirm(`Are you sure you want to delete the record with ID ${props.id}?`)) return
 
+        deleting.value = true;
         router.delete(props.deleteUrl, {
             preserveScroll: true,
             onSuccess: () => {
-                router.reload();
+                emit('deleted', props.id);
+                deleting.value = false;
                 toast({
                     title: 'Deleted!',
                     description: 'The record was deleted successfully.',

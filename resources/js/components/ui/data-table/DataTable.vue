@@ -14,7 +14,7 @@
     const props = defineProps<{
         columns: ColumnDef<TData, TValue>[]
         data: TData[]
-    }>()
+    }>();
 
     const table = useVueTable({
         get data() { return props.data },
@@ -28,11 +28,11 @@
         state: {
             get sorting() { return sorting.value },
             get columnFilters() { return columnFilters.value },
-        }
-    })
+        },
+    });
 
-    const sorting = ref<SortingState>([])
-    const columnFilters = ref<ColumnFiltersState>([])
+    const sorting = ref<SortingState>([]);
+    const columnFilters = ref<ColumnFiltersState>([]);
 </script>
 
 <template>

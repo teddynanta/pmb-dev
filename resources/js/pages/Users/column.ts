@@ -14,11 +14,17 @@ export interface User {
     role: string;
 }
 
-export const columns: ColumnDef<User>[] = [
+export const columns = (onRowDelete: (id: number) => void) : ColumnDef<User>[] => [
+
+    // {
+    //     accessorKey: 'id',
+    //     header: () => h('div', 'Id'),
+    //     cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('id')),
+    // },
     {
-        accessorKey: 'id',
-        header: () => h('div', 'Id'),
-        cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('id')),
+        id: 'number',
+        header: () => h('div', { class: 'text-center' }, 'No.'),
+        cell: ({ row }) => h('div', { class: 'text-center' }, row.index + 1),
     },
     {
         accessorKey: 'name',
@@ -67,26 +73,21 @@ export const columns: ColumnDef<User>[] = [
     //         return h('div', { class: 'text-right font-medium' }, formatted);
     //     },
     // },
-    // {
-    //     id: 'actions',
-    //     enableHiding: false,
-    //     cell: ({ row }) => {
-    //         const user = row.original
-    //         return h('div', { class: 'relative' }, h(DropdownAction, {
-    //             user,
-    //         }))
-    //     },
-    // },
     {
         id: 'actions',
         header: () => h('div', 'Actions'),
         cell: ({ row }) => {
             const user = row.original as User
+            // const r = row as typeof row & { table: any };
             return h(DataTableActions, {
+                // onDeleted: (id: number) => {
+                //     r.table.options.meta?.onRowDelete?.(id);
+                // },
                 id: user.id,
                 email: user.email,
                 editUrl: `users/${user.id}/edit`,
                 deleteUrl: `users/${user.id}`,
+                onDeleted: onRowDelete,
             })
         },
     },
