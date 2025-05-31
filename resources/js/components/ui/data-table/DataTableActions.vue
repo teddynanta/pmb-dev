@@ -1,6 +1,6 @@
 <script setup lang="ts">
     // import { Toaster } from '@/components/ui/sonner'
-    import { toast } from "vue-sonner";
+    import { toast, Toaster } from "vue-sonner";
     // import { useDialog } from '@/components/ui/dialog'
     import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
     import { MoreVertical, Pencil, Trash2, Copy } from 'lucide-vue-next'
@@ -17,15 +17,12 @@
     function handleCopy() {
         if (!props.email) return
         navigator.clipboard.writeText(props.email).then(() => {
-            toast({
-                title: 'Copied!',
+            toast('Copied!', {
                 description: `Email ${props.email} copied to clipboard.`,
             })
         }).catch(() => {
-            toast({
-                title: 'Copy failed',
+            toast('Copy failed', {
                 description: 'Could not copy the email.',
-                variant: 'destructive',
             })
         })
     }
@@ -64,6 +61,7 @@
 </script>
 
 <template>
+    <Toaster class="pointer-events-auto" />
     <DropdownMenu>
         <DropdownMenuTrigger as-child>
             <button class="p-2 rounded-md hover:bg-muted">

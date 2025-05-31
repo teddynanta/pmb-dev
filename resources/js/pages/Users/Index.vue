@@ -10,6 +10,7 @@
     // import { Plus } from "lucide-vue-next";
     import ModalAdd from '@/components/ModalAdd.vue';
     import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from '@/components/ui/form';
+    import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue, } from '@/components/ui/select';
     import { Input } from '@/components/ui/input';
     import { toTypedSchema } from '@vee-validate/zod';
     import * as z from 'zod';
@@ -19,9 +20,10 @@
 
 
     const formSchema = toTypedSchema(z.object({
-        username: z.string().min(5).max(10),
         name: z.string().min(5).max(10),
         email: z.string().email(),
+        password: z.string().min(8),
+        role: z.string(),
     }))
 
     function onSubmit() {
@@ -68,31 +70,45 @@
                     <template #desc-slot>Fill in the details to add a new user.</template>
                     <template #form-slot>
                         <form id="dialogForm" @submit="handleSubmit($event, onSubmit)">
-                            <FormField v-slot="{ componentField }" name="username">
-                                <FormItem>
-                                    <FormLabel>Username</FormLabel>
-                                    <FormControl>
-                                        <Input type="text" placeholder="shadcn" v-bind="componentField" />
-                                    </FormControl>
-                                    <FormMessage class="text-red-500" />
-                                </FormItem>
-                            </FormField>
                             <FormField v-slot="{ componentField }" name="name">
                                 <FormItem>
-                                    <FormLabel>Name</FormLabel>
+                                    <FormLabel class="mt-2">Nama</FormLabel>
                                     <FormControl>
-                                        <Input type="text" placeholder="shadcn" v-bind="componentField" />
+                                        <Input type="text" placeholder="masukkan nama user" v-bind="componentField" />
                                     </FormControl>
                                     <FormMessage class="text-red-500" />
                                 </FormItem>
                             </FormField>
-                            <FormField v-slot="{ componentField }" name="email">
+                            <FormField v-slot="{ componentField }" name="email" class="mt-5">
                                 <FormItem>
-                                    <FormLabel>Email</FormLabel>
+                                    <FormLabel class="mt-2">Email</FormLabel>
                                     <FormControl>
-                                        <Input type="email" placeholder="shadcn" v-bind="componentField" />
+                                        <Input type="email" placeholder="masukkan email user" v-bind="componentField" />
                                     </FormControl>
                                     <FormMessage class="text-red-500" />
+                                </FormItem>
+                            </FormField>
+                            <FormField v-slot="{ componentField }" name="role" class="mt-5">
+                                <FormItem>
+                                    <FormLabel class="mt-2">Role</FormLabel>
+                                    <Select v-bind="componentField">
+                                        <FormControl class="w-full">
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="pilih Role untuk user" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectItem value="admin">
+                                                    Admin
+                                                </SelectItem>
+                                                <SelectItem value="user">
+                                                    User
+                                                </SelectItem>
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+                                    <FormMessage />
                                 </FormItem>
                             </FormField>
                         </form>
