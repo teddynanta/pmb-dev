@@ -1,5 +1,5 @@
 <?php
-
+//halo kalian semua
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
